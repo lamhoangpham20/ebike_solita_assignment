@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app_data_source_1 = require("./app-data-source");
-const Station_1 = require("./entities/Station");
 require("reflect-metadata");
 const main = async () => {
     await app_data_source_1.myDataSource
@@ -18,15 +17,10 @@ const main = async () => {
     });
     const app = (0, express_1.default)();
     const port = 4000;
-    app.get("/stations", async function (_, res) {
-        const station = await app_data_source_1.myDataSource
-            .getRepository(Station_1.Station)
-            .createQueryBuilder("s")
-            .orderBy("s.fid")
-            .take(10)
-            .getMany();
-        res.send(station);
-    });
+    app.use(express_1.default.json());
+    app.use(express_1.default.urlencoded());
+    const stationRoute = require("./routes/station");
+    app.use("/stations", stationRoute);
     app.get("/", async function (_, res) {
         res.json("hello");
     });

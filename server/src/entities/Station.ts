@@ -1,44 +1,57 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, BaseEntity } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  BaseEntity,
+  OneToMany,
+  Generated,
+} from "typeorm";
+import { Journey } from "./Journey";
 
 @Entity()
 export class Station extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @Generated()
   fid!: number;
 
   @PrimaryColumn()
-  id: string;
+  id!: string;
 
-  @Column()
+  @Column({nullable:true})
   nimi: string;
 
-  @Column()
+  @Column({nullable:true})
   namn: string;
 
   @Column()
   name: string;
 
-  @Column()
+  @Column({nullable:true})
   oisoite: string;
 
-  @Column()
+  @Column({nullable:true})
   address: string;
 
-  @Column()
+  @Column({nullable:true})
   kaupunki: string;
 
-  @Column()
+  @Column({nullable:true})
   stad: string;
 
-  @Column()
+  @Column({nullable:true})
   operator: string;
 
-  @Column()
+  @Column({nullable:true})
   capacities: number;
 
-  @Column("decimal")
+  @Column("decimal", {nullable:true})
   longitude: number;
 
-  @Column("decimal")
+  @Column("decimal", {nullable:true})
   latitude: number;
-}
 
+  @OneToMany(() => Journey, (journey) => journey.departure_station)
+  departurn_journeys: Journey[];
+
+  @OneToMany(() => Journey, (journey) => journey.return_station)
+  return_journeys: Journey[];
+}

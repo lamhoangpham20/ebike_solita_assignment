@@ -2,6 +2,7 @@ import path from "path";
 import { DataSource } from "typeorm";
 import { Journey } from "./entities/Journey";
 import { Station } from "./entities/Station";
+import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 
 export const myDataSource = new DataSource({
   type: "postgres",
@@ -14,4 +15,5 @@ export const myDataSource = new DataSource({
   logging: true,
   synchronize: true,
   migrations: [path.join(__dirname, "./migrations/*")],
+  namingStrategy: new SnakeNamingStrategy(),
 });

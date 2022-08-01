@@ -19,11 +19,11 @@ __decorate([
     __metadata("design:type", Number)
 ], Journey.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "timestamp with time zone" }),
     __metadata("design:type", Date)
 ], Journey.prototype, "departure_date", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "timestamp with time zone" }),
     __metadata("design:type", Date)
 ], Journey.prototype, "return_date", void 0);
 __decorate([
@@ -31,15 +31,23 @@ __decorate([
     __metadata("design:type", Number)
 ], Journey.prototype, "cover_distance", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => Station_1.Station),
+    (0, typeorm_1.ManyToOne)(() => Station_1.Station, (departure_station) => departure_station.departurn_journeys),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Station_1.Station)
 ], Journey.prototype, "departure_station", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => Station_1.Station),
+    (0, typeorm_1.ManyToOne)(() => Station_1.Station, (return_station) => return_station.return_journeys),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", Station_1.Station)
 ], Journey.prototype, "return_station", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Journey.prototype, "departure_station_name", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Journey.prototype, "return_station_name", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)

@@ -8,6 +8,7 @@ const path_1 = __importDefault(require("path"));
 const typeorm_1 = require("typeorm");
 const Journey_1 = require("./entities/Journey");
 const Station_1 = require("./entities/Station");
+const typeorm_naming_strategies_1 = require("typeorm-naming-strategies");
 exports.myDataSource = new typeorm_1.DataSource({
     type: "postgres",
     host: "localhost",
@@ -19,5 +20,6 @@ exports.myDataSource = new typeorm_1.DataSource({
     logging: true,
     synchronize: true,
     migrations: [path_1.default.join(__dirname, "./migrations/*")],
+    namingStrategy: new typeorm_naming_strategies_1.SnakeNamingStrategy(),
 });
 //# sourceMappingURL=app-data-source.js.map

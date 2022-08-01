@@ -11,10 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Station = void 0;
 const typeorm_1 = require("typeorm");
+const Journey_1 = require("./Journey");
 let Station = class Station extends typeorm_1.BaseEntity {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.Generated)(),
     __metadata("design:type", Number)
 ], Station.prototype, "fid", void 0);
 __decorate([
@@ -22,11 +23,11 @@ __decorate([
     __metadata("design:type", String)
 ], Station.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Station.prototype, "nimi", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Station.prototype, "namn", void 0);
 __decorate([
@@ -34,37 +35,45 @@ __decorate([
     __metadata("design:type", String)
 ], Station.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Station.prototype, "oisoite", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Station.prototype, "address", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Station.prototype, "kaupunki", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Station.prototype, "stad", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Station.prototype, "operator", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], Station.prototype, "capacities", void 0);
 __decorate([
-    (0, typeorm_1.Column)("decimal"),
+    (0, typeorm_1.Column)("decimal", { nullable: true }),
     __metadata("design:type", Number)
 ], Station.prototype, "longitude", void 0);
 __decorate([
-    (0, typeorm_1.Column)("decimal"),
+    (0, typeorm_1.Column)("decimal", { nullable: true }),
     __metadata("design:type", Number)
 ], Station.prototype, "latitude", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Journey_1.Journey, (journey) => journey.departure_station),
+    __metadata("design:type", Array)
+], Station.prototype, "departurn_journeys", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Journey_1.Journey, (journey) => journey.return_station),
+    __metadata("design:type", Array)
+], Station.prototype, "return_journeys", void 0);
 Station = __decorate([
     (0, typeorm_1.Entity)()
 ], Station);
