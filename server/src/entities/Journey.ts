@@ -33,11 +33,17 @@ export class Journey extends BaseEntity {
   @JoinColumn()
   return_station: Station;
 
-  @Column()
+  @Column({ nullable: true })
   departure_station_name: string;
 
-  @Column()
+  @Column({ nullable: true })
   return_station_name: string;
+
+  @Column({type:"string"})
+  departureStationId: string;
+
+  @Column({type:"string"})
+  returnStationId: string;
 
   @Column()
   duration: number;

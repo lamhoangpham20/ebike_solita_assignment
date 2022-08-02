@@ -17,8 +17,9 @@ const main = async () => {
   app.use(express.json());
   app.use(express.urlencoded());
   const stationRoute = require("./routes/station");
+  const journeyRoute = require("./routes/journey");
   app.use("/stations", stationRoute);
-
+  app.use("/journeys", journeyRoute);
   app.get("/", async function (_, res: Response) {
     res.json("hello");
   });
