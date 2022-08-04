@@ -18,6 +18,7 @@ import {
 } from "@tanstack/react-query";
 import { Journey } from "../types/journey";
 import { useState } from "react";
+import { JourneyElements } from "../components/JourneyElements";
 
 const queryClient = new QueryClient();
 export default function Journeys() {
@@ -28,14 +29,18 @@ export default function Journeys() {
   );
 }
 const drawerWidth = 256;
+
+const fetchJourney = async () => {
+  const res = await fetch("http://localhost:4000/journeys");
+  return res.json();
+};
 function Content() {
   const [journey, setJourney] = useState([]);
-  const { isLoading, error, data } = useQuery(["journey"], () =>
-    fetch("http://localhost:4000/journeys").then((res) => {
-      setJourney(res.json());
-      return res.json();
-    })
+  const { isLoading, error, data, status } = useQuery(
+    ["journey"],
+    fetchJourney
   );
+  console.log(data);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
@@ -46,7 +51,7 @@ function Content() {
 
   if (error) {
     console.log(error);
-    return <div>An error has occurred: </div>;
+    return <div>An error has occurred: {status} </div>;
   }
   return (
     <ThemeProvider theme={theme}>
@@ -75,16 +80,11 @@ function Content() {
             component="main"
             sx={{ flex: 1, py: 6, px: 4, bgcolor: "#eaeff1" }}
           >
-            {data?.map((i: Journey) => (
+            
               <Box>
-                <div>{i.id}</div>
-                <div>{i.departure_date}</div>
-                <div>{i.return_date}</div>
-                <div>{i.departure_station.name}</div>
-                <div>{i.departure_station.id}</div>
-                <div>{i.return_station.id}</div>
+                <JourneyElements journeys={data}/>
               </Box>
-            ))}
+           
           </Box>
         </Box>
       </Box>
