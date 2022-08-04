@@ -21,6 +21,7 @@ import { useState } from "react";
 import { JourneyElements } from "../components/JourneyElements";
 import { IconButton } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import { StationElements } from "../components/StationElements";
 
 const queryClient = new QueryClient();
 export default function Journeys() {
@@ -32,15 +33,15 @@ export default function Journeys() {
 }
 const drawerWidth = 256;
 
-const fetchJourney = async (page = 0) => {
-  const res = await fetch(`http://localhost:4000/journeys?page=${page}`);
+const fetchStations = async (page = 0) => {
+  const res = await fetch(`http://localhost:4000/stations?page=${page}`);
   return res.json();
 };
 function Content() {
   const [page, setPage] = useState(1);
   const { isLoading, error, data, status } = useQuery(
-    ["journey", page],
-    () => fetchJourney(page),
+    ["stations", page],
+    () => fetchStations(page),
     { keepPreviousData: true }
   );
   console.log("data", data);
@@ -86,7 +87,7 @@ function Content() {
               <>Loading...</>
             ) : (
               <Box>
-                <JourneyElements journeys={data} />
+                <StationElements stations={data} />
               </Box>
             )}
             <Box

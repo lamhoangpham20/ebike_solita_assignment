@@ -9,43 +9,52 @@ import {
 } from "../resolvers/journey";
 const router = express.Router();
 
-router.get("/", async function (_: Request, res: Response) {
-  const stations = await getJourneys();
-  res.json(stations);
+// router.get("/", async function (_: Request, res: Response) {
+//   const stations = await getJourneys(null);
+//   res.json(stations);
+// });
+
+router.get("/", async function (req: Request, res: Response) {
+  let page = 0;
+  if (req.query && req.query.page) {
+    page = parseInt((req.query as any).page);
+  }
+  const journeys = await getJourneys(page);
+  res.json(journeys);
 });
 
 router.get("/:id", async function (req: Request, res: Response) {
   const id = parseInt(req.params.id);
-  const station = await getJourneybyId(id);
-  if (!station) {
+  const journey = await getJourneybyId(id);
+  if (!journey) {
     res.json(null);
   }
-  res.json(station);
+  res.json(journey);
 });
 
 router.post("/", async function (req: Request, res: Response) {
   const input = req.body;
-  const stations = await createJourney(input);
-  res.json(stations);
+  const journey = await createJourney(input);
+  res.json(journey);
 });
 
 router.put("/:id", async function (req: Request, res: Response) {
   const id = parseInt(req.params.id);
   const input = req.body;
-  const station = await updateJourney(id, input);
-  if (!station) {
+  const journey = await updateJourney(id, input);
+  if (!journey) {
     res.json(null);
   }
-  res.json(station);
+  res.json(journey);
 });
 
 router.delete("/:id", async function (req: Request, res: Response) {
   const id = parseInt(req.params.id);
-  const station = await deleteJourney(id);
-  if (!station) {
+  const journey = await deleteJourney(id);
+  if (!journey) {
     res.json(null);
   }
-  res.json(station);
+  res.json(journey);
 });
 
 module.exports = router;

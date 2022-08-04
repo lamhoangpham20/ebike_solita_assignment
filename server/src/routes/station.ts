@@ -9,9 +9,13 @@ import {
 } from "../resolvers/station";
 const router = express.Router();
 
-router.get("/", async function (_: Request, res: Response) {
-  const stations = await getStations();
-  res.json(stations);
+router.get("/", async function (req: Request, res: Response) {
+  let page = 0;
+  if (req.query && req.query.page) {
+    page = parseInt((req.query as any).page);
+  }
+  const journeys = await getStations(page);
+  res.json(journeys);
 });
 
 router.get("/:id", async function (req: Request, res: Response) {

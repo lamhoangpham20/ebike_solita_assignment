@@ -11,12 +11,16 @@ type journeyInput = {
   duration: number;
 };
 
-async function getJourneys(): Promise<Journey[] | null> {
+async function getJourneys(page: number | null): Promise<Journey[] | null> {
   const journeys = await myDataSource.getRepository(Journey).find({
     relations: {
       return_station: true,
       departure_station: true,
     },
+    order: {
+      departure_date: "ASC",
+    },
+    skip: page ? (page - 1) * 10 : 0,
     take: 10,
   });
   return journeys;

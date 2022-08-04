@@ -14,11 +14,12 @@ type StationInput = {
   latitude?: number;
 };
 
-async function getStations(): Promise<Station[] | null> {
+async function getStations(page: number): Promise<Station[] | null> {
   const stations = await myDataSource
     .getRepository(Station)
     .createQueryBuilder("s")
     .orderBy("s.id")
+    .skip(page ? (page - 1) * 10 : 0)
     .take(10)
     .getMany();
   return stations;
