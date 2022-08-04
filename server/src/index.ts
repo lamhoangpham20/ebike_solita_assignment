@@ -1,6 +1,7 @@
 import express from "express";
 import { Response } from "express";
 import { myDataSource } from "./app-data-source";
+var cors = require('cors')
 import "reflect-metadata";
 
 const main = async () => {
@@ -14,6 +15,7 @@ const main = async () => {
     });
   const app = express();
   const port = 4000;
+  app.use(cors())
   app.use(express.json());
   app.use(express.urlencoded());
   const stationRoute = require("./routes/station");
@@ -30,3 +32,5 @@ const main = async () => {
 };
 
 main().catch((err) => console.log(err));
+
+
