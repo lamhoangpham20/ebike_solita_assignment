@@ -15,9 +15,10 @@ import { useState } from "react";
 import { IconButton } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { StationElements } from "../components/StationElements";
+import MapElements from "../components/MapElements";
 
 const queryClient = new QueryClient();
-export default function Journeys() {
+export default function Map() {
   return (
     <QueryClientProvider client={queryClient}>
       <Content />
@@ -26,18 +27,7 @@ export default function Journeys() {
 }
 const drawerWidth = 256;
 
-const fetchStations = async (page = 0) => {
-  const res = await fetch(`http://localhost:4000/stations?page=${page}`);
-  return res.json();
-};
 function Content() {
-  const [page, setPage] = useState(1);
-  const { isLoading, error, data, status } = useQuery(
-    ["stations", page],
-    () => fetchStations(page),
-    { keepPreviousData: true }
-  );
-  console.log("data", data);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
@@ -45,10 +35,6 @@ function Content() {
     setMobileOpen(!mobileOpen);
   };
 
-  if (error) {
-    console.log(error);
-    return <div>An error has occurred: {status} </div>;
-  }
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex", minHeight: "100vh" }}>
@@ -76,13 +62,10 @@ function Content() {
             component="main"
             sx={{ flex: 1, py: 6, px: 4, bgcolor: "#eaeff1" }}
           >
-            {isLoading && !data ? (
-              <>Loading...</>
-            ) : (
-              <Box>
-                <StationElements stations={data} />
-              </Box>
-            )}
+            <Box>
+              <MapElements />
+            </Box>
+
             <Box
               sx={{
                 flexShrink: 0,
@@ -93,23 +76,7 @@ function Content() {
                 mt: 2,
                 mr: 2,
               }}
-            >
-              <IconButton
-                onClick={() => setPage(page - 1)}
-                disabled={page === 1}
-                aria-label="previous page"
-              >
-                <KeyboardArrowLeft />
-              </IconButton>
-              {page}
-              <IconButton
-                onClick={() => setPage(page + 1)}
-                disabled={page === 100}
-                aria-label="next page"
-              >
-                <KeyboardArrowRight />
-              </IconButton>
-            </Box>
+            ></Box>
           </Box>
         </Box>
       </Box>

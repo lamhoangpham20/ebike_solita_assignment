@@ -1,22 +1,16 @@
 import * as React from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import Navigator from "../components/Navigator";
 import Header from "../components/Header";
-import Paperbase from "../components/Paperbase";
 import { theme } from "../components/theme";
 import {
   useQuery,
-  useMutation,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { Journey } from "../types/journey";
 import { useState } from "react";
 import { JourneyElements } from "../components/JourneyElements";
 import { IconButton } from "@mui/material";

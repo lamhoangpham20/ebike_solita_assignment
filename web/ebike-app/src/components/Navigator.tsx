@@ -25,7 +25,7 @@ const categories = [
         link: "/journeys",
       },
       { id: "Station", icon: <DnsRoundedIcon />, link: "/stations" },
-      { id: "Map", icon: <PermMediaOutlinedIcon />, link: "/stations" },
+      { id: "Map", icon: <PermMediaOutlinedIcon />, link: "/map" },
     ],
   },
 ];
