@@ -15,7 +15,7 @@ import { useState } from "react";
 import { IconButton } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { StationElements } from "../components/StationElements";
-import MapElements from "../components/MapElements";
+import MapElements from "../components/map/MapElements";
 
 const queryClient = new QueryClient();
 export default function Map() {
