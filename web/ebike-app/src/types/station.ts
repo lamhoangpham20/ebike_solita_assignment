@@ -9,4 +9,6 @@ export type Station = {
   capacities?: number;
   longitude?: number;
   latitude?: number;
+  departureCount?: number;
+  returnCount?: number;
 };

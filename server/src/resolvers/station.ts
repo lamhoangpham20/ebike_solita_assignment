@@ -25,8 +25,26 @@ async function getStations(page: number): Promise<Station[] | null> {
   return stations;
 }
 
-async function getStationbyId(id: string): Promise<Station | null> {
-  const stations = await Station.findOne({ where: { id } });
+async function getStationbyId(id: string): Promise<any | null> {
+  // const stations = await Station.findOne({
+  //   where: { id },
+  //   relations: {
+  //     departurn_journeys:true
+  //     return_journeys: true,
+  //   },
+  // });
+  const stations = await myDataSource
+    .getRepository(Station)
+    .createQueryBuilder("station")
+    .loadRelationCountAndMap(
+      "station.departureCount",
+      "station.departurn_journeys"
+    )
+    .loadRelationCountAndMap("station.returnCount", "station.return_journeys")
+    .innerJoin("station.return_journeys", "return_journey")
+    //.select("*, AVG(return_journey.duration)")
+    .where("station.id = :id", { id: id })
+    .getOne();
   return stations;
 }
 
@@ -68,7 +86,16 @@ async function deleteStation(id: string) {
   return true;
 }
 
+const searchStations = async (name: string) => {
+  console.log(name);
+  return await myDataSource
+    .getRepository(Station)
+    .createQueryBuilder("station")
+    .where("LOWER(station.name) like :name", { name: `%${name}%` })
+    .getMany();
+};
 export {
+  searchStations,
   getStations,
   getStationbyId,
   createStation,

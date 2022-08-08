@@ -1,7 +1,13 @@
 import React, { useEffect, ReactElement, useLayoutEffect, useRef } from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { Markers } from "./Markers";
-import { api_key } from "../../../constant";
+import { api_key } from "../../../constant/constant";
+import { Station } from "../../types/station";
+import { isArray } from "util";
+
+interface MapElementsProps {
+  stations: Array<Station>;
+}
 
 interface MapProps extends google.maps.MapOptions {
   style: { [key: string]: string };
@@ -19,10 +25,12 @@ function MyMapComponent({
   center,
   zoom,
   children,
+  stations,
 }: {
   center: google.maps.LatLngLiteral;
   zoom: number;
   children: any;
+  stations: Array<Station> | Station;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   let map: google.maps.Map;
@@ -31,18 +39,28 @@ function MyMapComponent({
       console.log(ref.current);
       map = new window.google.maps.Map(ref.current, { zoom, center });
     }
-    const myLatLng = [
-      { lat: -34.397, lng: 150.644 },
-      { lat: -35.397, lng: 151.644 },
-    ];
     const infoWindow = new google.maps.InfoWindow();
-    myLatLng.map((i) => {
-      Markers(i, map, infoWindow);
-    });
+    if (Array.isArray(stations)) {
+      stations.map((i) => {
+        console.log(i.latitude);
+      });
+    } else {
+      if (stations) {
+        if (stations.latitude && stations.longitude && stations.name) {
+          console.log(parseFloat(Number(stations.latitude).toFixed(3)));
+          Markers(
+            {
+              lat: parseFloat(Number(stations.latitude).toFixed(3)),
+              lng: parseFloat(Number(stations.longitude).toFixed(3)),
+            },
+            stations.name,
+            map,
+            infoWindow
+          );
+        }
+      }
+    }
   });
-  // useEffect(() => {
-  //   new window.google.maps.Map(ref.current, {});
-  // });
 
   return (
     <>
@@ -76,15 +94,18 @@ function MyMapComponent({
 //   return <div></div>;
 // };
 
-export default function MapElements() {
-  const center = { lat: -34.397, lng: 150.644 };
-  const zoom = 9;
+const MapElements: React.FC<MapElementsProps> = (props: MapElementsProps) => {
+  const { stations } = props;
+  const center = { lat: 60.155, lng: 24.95 };
+  const zoom = 14;
 
   return (
     <Wrapper apiKey={api_key} render={render}>
-      <MyMapComponent center={center} zoom={zoom}>
+      <MyMapComponent center={center} zoom={zoom} stations={stations}>
         {/* <Marker position={position} /> */}
       </MyMapComponent>
     </Wrapper>
   );
-}
+};
+
+export default MapElements;

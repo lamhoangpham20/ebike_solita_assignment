@@ -1,6 +1,7 @@
 import { Timestamp } from "typeorm";
 import { myDataSource } from "../app-data-source";
 import { Journey } from "../entities/Journey";
+import { Between } from "typeorm";
 
 type journeyInput = {
   departure_date: Timestamp;
@@ -61,7 +62,36 @@ async function deleteJourney(id: number) {
   return true;
 }
 
+const searchJourney = async (
+  departure_station_id: string,
+  return_station_id: string
+) => {
+  return await Journey.find({
+    where: {
+      departureStationId: departure_station_id,
+      returnStationId: return_station_id,
+    },
+  });
+};
+
+const filterJourney = async (
+  departure_station_id: string,
+  return_station_id: string,
+  startDate: string,
+  endDate: string
+) => {
+  return await Journey.find({
+    where: {
+      departureStationId: departure_station_id,
+      returnStationId: return_station_id,
+      departure_date: Between(new Date(startDate), new Date(endDate)),
+    },
+  });
+};
+
 export {
+  filterJourney,
+  searchJourney,
   getJourneys,
   getJourneybyId,
   createJourney,

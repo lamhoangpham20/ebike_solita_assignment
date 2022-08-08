@@ -26,6 +26,10 @@ export default function Map() {
   );
 }
 const drawerWidth = 256;
+const fetchStations = async (page = 0) => {
+  const res = await fetch(`http://localhost:4000/stations?page=${page}`);
+  return res.json();
+};
 
 function Content() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -34,6 +38,12 @@ function Content() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const [page, setPage] = useState(1);
+  const { isLoading, error, data, status } = useQuery(
+    ["stations", page],
+    () => fetchStations(page),
+    { keepPreviousData: true }
+  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -63,7 +73,11 @@ function Content() {
             sx={{ flex: 1, py: 6, px: 4, bgcolor: "#eaeff1" }}
           >
             <Box>
-              <MapElements />
+              {isLoading && !data ? (
+                <div>...Loading</div>
+              ) : (
+                <MapElements stations={data} />
+              )}
             </Box>
 
             <Box

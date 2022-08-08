@@ -3,8 +3,10 @@ import { Response, Request } from "express";
 import {
   createJourney,
   deleteJourney,
+  filterJourney,
   getJourneybyId,
   getJourneys,
+  searchJourney,
   updateJourney,
 } from "../resolvers/journey";
 const router = express.Router();
@@ -23,7 +25,7 @@ router.get("/", async function (req: Request, res: Response) {
   res.json(journeys);
 });
 
-router.get("/:id", async function (req: Request, res: Response) {
+router.get("/id/:id", async function (req: Request, res: Response) {
   const id = parseInt(req.params.id);
   const journey = await getJourneybyId(id);
   if (!journey) {
@@ -51,6 +53,41 @@ router.put("/:id", async function (req: Request, res: Response) {
 router.delete("/:id", async function (req: Request, res: Response) {
   const id = parseInt(req.params.id);
   const journey = await deleteJourney(id);
+  if (!journey) {
+    res.json(null);
+  }
+  res.json(journey);
+});
+
+router.get("/search", async function (req: Request, res: Response) {
+  let departure_station_id: string;
+  let return_station_id: string;
+  if (req.query && req.query.name) {
+    departure_station_id = (req.query as any).depId;
+    return_station_id = (req.query as any).retId;
+  }
+  const journey = await searchJourney(
+    (req.query as any).depId,
+    (req.query as any).retId
+  );
+  if (!journey) {
+    res.json(null);
+  }
+  res.json(journey);
+});
+
+router.post("/filter", async function (req: Request, res: Response) {
+  const input = req.body;
+  const departure_station_id = input.depId;
+  const return_station_id = input.retId;
+  const startDate = input.startDate;
+  const endDate = input.endDate;
+  const journey = await filterJourney(
+    departure_station_id,
+    return_station_id,
+    startDate,
+    endDate
+  );
   if (!journey) {
     res.json(null);
   }

@@ -2,13 +2,14 @@ import React from "react";
 
 export const Markers = (
   options: any,
+  name:string,
   map: google.maps.Map,
   info: google.maps.InfoWindow
 ) => {
   const marker = new google.maps.Marker({
     position: options,
     map,
-    title: "Hello World!",
+    title: name,
     clickable: true,
   });
   marker.addListener("click", () => {
