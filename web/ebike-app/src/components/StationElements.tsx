@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Station } from "../types/station";
+import NextLink from "next/link";
+import Link from "@mui/material/Link";
 
 interface StationsProps {
   stations: Array<Station>;
@@ -33,19 +35,21 @@ export const StationElements: React.FC<StationsProps> = (
         </TableHead>
         <TableBody>
           {stations.map((row: Station) => (
-            <TableRow
-              key={row.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.id}
-              </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.address}</TableCell>
-              <TableCell align="right">{row.capacities}</TableCell>
-              <TableCell align="right">{row.longitude}</TableCell>
-              <TableCell align="right">{row.latitude}</TableCell>
-            </TableRow>
+            <NextLink href={`/station/${row.id}`}>
+              <TableRow
+                key={row.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.id}
+                </TableCell>
+                <TableCell align="right">{row.name}</TableCell>
+                <TableCell align="right">{row.address}</TableCell>
+                <TableCell align="right">{row.capacities}</TableCell>
+                <TableCell align="right">{row.longitude}</TableCell>
+                <TableCell align="right">{row.latitude}</TableCell>
+              </TableRow>
+            </NextLink>
           ))}
         </TableBody>
       </Table>

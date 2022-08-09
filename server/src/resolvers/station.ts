@@ -92,6 +92,7 @@ const searchStations = async (name: string) => {
     .getRepository(Station)
     .createQueryBuilder("station")
     .where("LOWER(station.name) like :name", { name: `%${name}%` })
+    .take(10)
     .getMany();
 };
 export {

@@ -70,7 +70,7 @@ router.get("/search", async function (req: Request, res: Response) {
   if (!journeys) {
     res.json(null);
   }
-  res.json(journeys.map((i) => i.name));
+  res.json(journeys);
 });
 
 module.exports = router;

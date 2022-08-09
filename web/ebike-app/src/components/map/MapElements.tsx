@@ -42,7 +42,18 @@ function MyMapComponent({
     const infoWindow = new google.maps.InfoWindow();
     if (Array.isArray(stations)) {
       stations.map((i) => {
-        console.log(i.latitude);
+        if (i.latitude && i.longitude && i.name) {
+          console.log(i.latitude);
+          Markers(
+            {
+              lat: parseFloat(Number(i.latitude).toFixed(5)),
+              lng: parseFloat(Number(i.longitude).toFixed(5)),
+            },
+            i.name,
+            map,
+            infoWindow
+          );
+        }
       });
     } else {
       if (stations) {

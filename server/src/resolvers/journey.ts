@@ -64,13 +64,20 @@ async function deleteJourney(id: number) {
 
 const searchJourney = async (
   departure_station_id: string,
-  return_station_id: string
+  return_station_id: string,
+  page: number
 ) => {
   return await Journey.find({
+    relations: {
+      return_station: true,
+      departure_station: true,
+    },
     where: {
       departureStationId: departure_station_id,
       returnStationId: return_station_id,
     },
+    skip: page ? (page - 1) * 10 : 0,
+    take: 10,
   });
 };
 
@@ -78,14 +85,21 @@ const filterJourney = async (
   departure_station_id: string,
   return_station_id: string,
   startDate: string,
-  endDate: string
+  endDate: string,
+  page: number
 ) => {
   return await Journey.find({
+    relations: {
+      return_station: true,
+      departure_station: true,
+    },
     where: {
       departureStationId: departure_station_id,
       returnStationId: return_station_id,
       departure_date: Between(new Date(startDate), new Date(endDate)),
     },
+    skip: page ? (page - 1) * 10 : 0,
+    take: 10,
   });
 };
 

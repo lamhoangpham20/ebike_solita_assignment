@@ -27,8 +27,8 @@ export const JourneyElements: React.FC<JourneysProps> = (
             <TableCell align="right">Return Date</TableCell>
             <TableCell align="right">Departure Station</TableCell>
             <TableCell align="right">Return Station</TableCell>
-            <TableCell align="right">Cover Distance</TableCell>
-            <TableCell align="right">Duration</TableCell>
+            <TableCell align="right">Cover Distance (km)</TableCell>
+            <TableCell align="right">Duration (minutes)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -43,8 +43,12 @@ export const JourneyElements: React.FC<JourneysProps> = (
               <TableCell align="right">{row.return_date}</TableCell>
               <TableCell align="right">{row.departure_station.name}</TableCell>
               <TableCell align="right">{row.return_station.name}</TableCell>
-              <TableCell align="right">{row.cover_distance}</TableCell>
-              <TableCell align="right">{row.duration}</TableCell>
+              <TableCell align="right">
+                {(row.cover_distance / 1000).toFixed(2)}
+              </TableCell>
+              <TableCell align="right">
+                {(row.duration / 60).toFixed(2)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

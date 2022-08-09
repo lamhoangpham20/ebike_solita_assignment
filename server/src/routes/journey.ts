@@ -60,15 +60,14 @@ router.delete("/:id", async function (req: Request, res: Response) {
 });
 
 router.get("/search", async function (req: Request, res: Response) {
-  let departure_station_id: string;
-  let return_station_id: string;
-  if (req.query && req.query.name) {
-    departure_station_id = (req.query as any).depId;
-    return_station_id = (req.query as any).retId;
+  let page = 0;
+  if (req.query && req.query.page) {
+    page = parseInt((req.query as any).page);
   }
   const journey = await searchJourney(
     (req.query as any).depId,
-    (req.query as any).retId
+    (req.query as any).retId,
+    page
   );
   if (!journey) {
     res.json(null);
@@ -76,17 +75,17 @@ router.get("/search", async function (req: Request, res: Response) {
   res.json(journey);
 });
 
-router.post("/filter", async function (req: Request, res: Response) {
-  const input = req.body;
-  const departure_station_id = input.depId;
-  const return_station_id = input.retId;
-  const startDate = input.startDate;
-  const endDate = input.endDate;
+router.get("/filter", async function (req: Request, res: Response) {
+  let page = 0;
+  if (req.query && req.query.page) {
+    page = parseInt((req.query as any).page);
+  }
   const journey = await filterJourney(
-    departure_station_id,
-    return_station_id,
-    startDate,
-    endDate
+    (req.query as any).depId,
+    (req.query as any).retId,
+    (req.query as any).startDate,
+    (req.query as any).endDate,
+    page
   );
   if (!journey) {
     res.json(null);

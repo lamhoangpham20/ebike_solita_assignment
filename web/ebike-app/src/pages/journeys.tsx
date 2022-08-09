@@ -15,6 +15,15 @@ import { useState } from "react";
 import { JourneyElements } from "../components/JourneyElements";
 import { IconButton } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import { Search } from "../components/Search";
+import { Filter } from "../components/Filter";
+
+type Input = {
+  depId?: string | null;
+  retId?: string | null;
+  startDate?: Date | null;
+  endDate?: Date | null;
+};
 
 const queryClient = new QueryClient();
 export default function Journeys() {
@@ -26,15 +35,39 @@ export default function Journeys() {
 }
 const drawerWidth = 256;
 
-const fetchJourney = async (page = 0) => {
-  const res = await fetch(`http://localhost:4000/journeys?page=${page}`);
-  return res.json();
+const fetchJourney = async (page = 0, mode = "show", input: Input) => {
+  if (mode === "show") {
+    const res = await fetch(`http://localhost:4000/journeys?page=${page}`);
+    return res.json();
+  }
+  if (mode === "search") {
+    if (input.depId && input.retId) {
+      const res = await fetch(
+        `http://localhost:4000/journeys/search?page=${page}&?depId=${input.depId}&?retId=${input.retId}`
+      );
+      return res.json();
+    }
+  }
+  if (mode === "filter") {
+    if (input.depId && input.retId && input.startDate && input.endDate) {
+      const res = await fetch(
+        `http://localhost:4000/journeys/filter?page=${page}&?depId=${
+          input.depId
+        }&?retId=${
+          input.retId
+        }&?startDate=${input.startDate.toDateString()}&?endDate=${input.endDate.toDateString()}`
+      );
+      return res.json();
+    }
+  }
 };
 function Content() {
   const [page, setPage] = useState(1);
-  const { isLoading, error, data, status } = useQuery(
-    ["journey", page],
-    () => fetchJourney(page),
+  const [mode, setMode] = useState("show");
+  const [input, setInput] = useState<Input>({});
+  const { isLoading, error, data, status, refetch } = useQuery(
+    ["journey", page, mode, input],
+    () => fetchJourney(page, mode, input),
     { keepPreviousData: true }
   );
   console.log("data", data);
@@ -45,6 +78,35 @@ function Content() {
     setMobileOpen(!mobileOpen);
   };
 
+  const searchMode = (depId: string, retId: string) => {
+    setMode("search");
+    console.log(depId, retId);
+    var obj = {
+      depId: depId,
+      retId: retId,
+    };
+    setInput(obj);
+    setPage(1);
+    refetch;
+  };
+  const filterMode = (
+    depId: string,
+    retId: string,
+    startDate: Date,
+    endDate: Date
+  ) => {
+    setMode("filter");
+    var obj = {
+      depId: depId,
+      retId: retId,
+      startDate: startDate,
+      endDate: endDate,
+    };
+    setInput(obj);
+    setPage(1);
+    console.log(obj.endDate);
+    refetch;
+  };
   if (error) {
     console.log(error);
     return <div>An error has occurred: {status} </div>;
@@ -76,6 +138,12 @@ function Content() {
             component="main"
             sx={{ flex: 1, py: 6, px: 4, bgcolor: "#eaeff1" }}
           >
+            <Box sx={{ display: "inline-flex" }}>
+              <Search searchMode={searchMode}></Search>
+            </Box>
+            <Box sx={{ display: "inline-flex" }}>
+              <Filter filterMode={filterMode}></Filter>
+            </Box>
             {isLoading && !data ? (
               <>Loading...</>
             ) : (
