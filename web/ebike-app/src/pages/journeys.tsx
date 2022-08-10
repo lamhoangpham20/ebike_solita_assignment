@@ -51,11 +51,11 @@ const fetchJourney = async (page = 0, mode = "show", input: Input) => {
   if (mode === "filter") {
     if (input.depId && input.retId && input.startDate && input.endDate) {
       const res = await fetch(
-        `http://localhost:4000/journeys/filter?page=${page}&?depId=${
+        `http://localhost:4000/journeys/filter?page=${page}&depId=${
           input.depId
-        }&?retId=${
+        }&retId=${
           input.retId
-        }&?startDate=${input.startDate.toDateString()}&?endDate=${input.endDate.toDateString()}`
+        }&startDate=${input.startDate.toDateString()}&endDate=${input.endDate.toDateString()}`
       );
       return res.json();
     }
@@ -171,7 +171,10 @@ function Content() {
               </IconButton>
               {page}
               <IconButton
-                onClick={() => setPage(page + 1)}
+                onClick={() => {
+                  console.log(mode);
+                  setPage(page + 1);
+                }}
                 disabled={page === 100}
                 aria-label="next page"
               >

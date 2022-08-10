@@ -80,6 +80,7 @@ router.get("/filter", async function (req: Request, res: Response) {
   if (req.query && req.query.page) {
     page = parseInt((req.query as any).page);
   }
+  console.log(req.query.startDate);
   const journey = await filterJourney(
     (req.query as any).depId,
     (req.query as any).retId,
