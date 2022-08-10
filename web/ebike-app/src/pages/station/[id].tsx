@@ -44,7 +44,7 @@ function Content() {
     setMobileOpen(!mobileOpen);
   };
   const fetchStations = async () => {
-    const res = await fetch(`http://localhost:4000/stations/id/${id}`);
+    const res = await fetch(`http://localhost:4000/stations/test?id=${id}`);
     return res.json();
   };
   const { isLoading, error, data, status } = useQuery(
@@ -93,7 +93,7 @@ function Content() {
                     <TableBody>
                       <TableRow>
                         <TableCell>id</TableCell>
-                        <TableCell align="right">{data?.id}</TableCell>
+                        <TableCell align="right">{data?.station?.id}</TableCell>
                       </TableRow>
                       <TableRow
                         sx={{
@@ -103,7 +103,9 @@ function Content() {
                         <TableCell component="th" scope="row">
                           name
                         </TableCell>
-                        <TableCell align="right">{data?.name}</TableCell>
+                        <TableCell align="right">
+                          {data?.station?.name}
+                        </TableCell>
                       </TableRow>
                       <TableRow
                         sx={{
@@ -113,7 +115,9 @@ function Content() {
                         <TableCell component="th" scope="row">
                           address
                         </TableCell>
-                        <TableCell align="right">{data?.address}</TableCell>
+                        <TableCell align="right">
+                          {data?.station?.address}
+                        </TableCell>
                       </TableRow>
                       <TableRow
                         sx={{
@@ -123,7 +127,9 @@ function Content() {
                         <TableCell component="th" scope="row">
                           Capacities
                         </TableCell>
-                        <TableCell align="right">{data?.capacities}</TableCell>
+                        <TableCell align="right">
+                          {data?.station?.capacities}
+                        </TableCell>
                       </TableRow>
                       <TableRow
                         sx={{
@@ -134,7 +140,7 @@ function Content() {
                           Departure Journey
                         </TableCell>
                         <TableCell align="right">
-                          {data?.departureCount}
+                          {data?.station?.departureCount}
                         </TableCell>
                       </TableRow>
                       <TableRow
@@ -145,12 +151,50 @@ function Content() {
                         <TableCell component="th" scope="row">
                           Return Journey
                         </TableCell>
-                        <TableCell align="right">{data?.returnCount}</TableCell>
+                        <TableCell align="right">
+                          {data?.station?.returnCount}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          Average Departure Distance
+                        </TableCell>
+                        <TableCell align="right">
+                          {data?.avgDepart[0]?.avg}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          Average return Distance
+                        </TableCell>
+                        <TableCell align="right">
+                          {data?.avgDepart[1]?.avg}
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
                 </TableContainer>
-                <MapElements stations={data} />;
+                <div>Top5 Return Stations:</div>
+                <ul>
+                  {data?.top5Depart?.map((i: any) => (
+                    <li>{i.name} : {i.count} journeys</li>
+                  ))}
+                </ul>
+                <div>Top5 Depart Stations:</div>
+                <ul>
+                  {data?.top5return?.map((i: any) => (
+                    <li>{i.name} : {i.count} journeys</li>
+                  ))}
+                </ul>
+                <MapElements stations={data.station} />;
               </Box>
             )}
           </Box>

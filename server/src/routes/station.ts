@@ -7,6 +7,7 @@ import {
   updateStation,
   deleteStation,
   searchStations,
+  getStationTest,
 } from "../resolvers/station";
 const router = express.Router();
 
@@ -17,6 +18,15 @@ router.get("/", async function (req: Request, res: Response) {
   }
   const journeys = await getStations(page);
   res.json(journeys);
+});
+
+router.get("/test", async function (req: Request, res: Response) {
+  let id = "";
+  if (req.query && req.query.id) {
+    id = (req.query as any).id;
+  }
+  let journeys = await getStationTest(id);
+  res.json(journeys)
 });
 
 router.get("/id/:id", async function (req: Request, res: Response) {

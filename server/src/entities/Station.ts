@@ -54,4 +54,5 @@ export class Station extends BaseEntity {
 
   @OneToMany(() => Journey, (journey) => journey.return_station)
   return_journeys: Journey[];
+
 }
