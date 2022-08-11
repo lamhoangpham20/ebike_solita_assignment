@@ -48,7 +48,7 @@ function CreateForm() {
   const { control, handleSubmit } = useForm<IFormInput>();
   const queryClient = useQueryClient();
   const postStation = async (data: IFormInput) => {
-    const res = await fetch(`http://localhost:4000/stations`, {
+    const res = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/stations`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

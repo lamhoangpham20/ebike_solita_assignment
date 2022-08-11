@@ -14,7 +14,7 @@ interface SearchProps {
 }
 const searchStations = async (input = "") => {
   const res = await fetch(
-    `http://localhost:4000/stations/search?name=${input}`
+    `${process.env.NEXT_PUBLIC_API_URL}/stations/search?name=${input}`
   );
   return res.json();
 };

@@ -37,13 +37,13 @@ const drawerWidth = 256;
 
 const fetchJourney = async (page = 0, mode = "show", input: Input) => {
   if (mode === "show") {
-    const res = await fetch(`http://localhost:4000/journeys?page=${page}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/journeys?page=${page}`);
     return res.json();
   }
   if (mode === "search") {
     if (input.depId && input.retId) {
       const res = await fetch(
-        `http://localhost:4000/journeys/search?page=${page}&?depId=${input.depId}&?retId=${input.retId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/journeys/search?page=${page}&?depId=${input.depId}&?retId=${input.retId}`
       );
       return res.json();
     }
@@ -51,7 +51,7 @@ const fetchJourney = async (page = 0, mode = "show", input: Input) => {
   if (mode === "filter") {
     if (input.depId && input.retId && input.startDate && input.endDate) {
       const res = await fetch(
-        `http://localhost:4000/journeys/filter?page=${page}&depId=${
+        `${process.env.NEXT_PUBLIC_API_URL}/journeys/filter?page=${page}&depId=${
           input.depId
         }&retId=${
           input.retId

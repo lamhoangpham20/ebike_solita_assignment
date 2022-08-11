@@ -27,7 +27,7 @@ export default function Map() {
 }
 const drawerWidth = 256;
 const fetchStations = async (page = 0) => {
-  const res = await fetch(`http://localhost:4000/stations?page=${page}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stations?page=${page}`);
   return res.json();
 };
 

@@ -36,23 +36,30 @@ const drawerWidth = 256;
 
 function Content() {
   const router = useRouter();
-  const { id } = router.query;
+  const { id }  = router.query;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
+  console.log(id);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const fetchStations = async () => {
-    const res = await fetch(`http://localhost:4000/stations/test?id=${id}`);
+  const fetchStations = async (id: any) => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/stations/test?id=${id}`
+    );
     return res.json();
   };
-  const { isLoading, error, data, status } = useQuery(
-    ["station"],
-    () => fetchStations(),
+  const { isLoading, error, data, status, refetch, isFetching } = useQuery(
+    ["station", id],
+    () => fetchStations(id),
     { keepPreviousData: true }
   );
-
+  if (data?.station?.id !== id) {
+    console.log("cong ly", data?.station?.name);
+    refetch;
+    console.log(isFetching, isLoading);
+  }
   if (error) {
     console.log(error);
     return <div>An error has occurred: {status} </div>;
@@ -86,6 +93,8 @@ function Content() {
           >
             {isLoading && !data ? (
               <>Loading...</>
+            ) : isFetching ? (
+              <>Fetching</>
             ) : (
               <Box>
                 <TableContainer component={Paper}>
@@ -93,7 +102,7 @@ function Content() {
                     <TableBody>
                       <TableRow>
                         <TableCell>id</TableCell>
-                        <TableCell align="right">{data?.station?.id}</TableCell>
+                        <TableCell align="right">{id}</TableCell>
                       </TableRow>
                       <TableRow
                         sx={{
@@ -185,13 +194,17 @@ function Content() {
                 <div>Top5 Return Stations:</div>
                 <ul>
                   {data?.top5Depart?.map((i: any) => (
-                    <li>{i.name} : {i.count} journeys</li>
+                    <li key={i.name}>
+                      {i.name} : {i.count} journeys
+                    </li>
                   ))}
                 </ul>
                 <div>Top5 Depart Stations:</div>
                 <ul>
                   {data?.top5return?.map((i: any) => (
-                    <li>{i.name} : {i.count} journeys</li>
+                    <li key={i.name}>
+                      {i.name} : {i.count} journeys
+                    </li>
                   ))}
                 </ul>
                 <MapElements stations={data.station} />;

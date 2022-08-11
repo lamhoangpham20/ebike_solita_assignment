@@ -29,7 +29,7 @@ const item = {
 
 const searchStations = async (input = "") => {
   const res = await fetch(
-    `http://localhost:4000/stations/search?name=${input}`
+    `${process.env.NEXT_PUBLIC_API_URL}/stations/search?name=${input}`
   );
   return res.json();
 };
@@ -75,7 +75,7 @@ export default function Navigator(props: DrawerProps) {
         ) : (
           <>
             {data.map((i: Station) => (
-              <NextLink href={`/station/${i.id}`}>
+              <NextLink key={i.id} href={`/station/${i.id}`}>
                 <Link>
                   <ListItem disablePadding key={i.id}>
                     <ListItemButton sx={item}>

@@ -3,10 +3,9 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { Markers } from "./Markers";
 import { api_key } from "../../../constant/constant";
 import { Station } from "../../types/station";
-import { isArray } from "util";
 
 interface MapElementsProps {
-  stations: Array<Station>;
+  stations: Array<Station> | Station;
 }
 
 interface MapProps extends google.maps.MapOptions {
@@ -36,14 +35,12 @@ function MyMapComponent({
   let map: google.maps.Map;
   useLayoutEffect(() => {
     if (ref.current) {
-      console.log(ref.current);
       map = new window.google.maps.Map(ref.current, { zoom, center });
     }
     const infoWindow = new google.maps.InfoWindow();
     if (Array.isArray(stations)) {
       stations.map((i) => {
         if (i.latitude && i.longitude && i.name) {
-          console.log(i.latitude);
           Markers(
             {
               lat: parseFloat(Number(i.latitude).toFixed(5)),
@@ -58,7 +55,6 @@ function MyMapComponent({
     } else {
       if (stations) {
         if (stations.latitude && stations.longitude && stations.name) {
-          console.log(parseFloat(Number(stations.latitude).toFixed(3)));
           Markers(
             {
               lat: parseFloat(Number(stations.latitude).toFixed(3)),
@@ -80,34 +76,27 @@ function MyMapComponent({
   );
 }
 
-// export const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
-//   const [marker, setMarker] = React.useState<google.maps.Marker>();
-//   console.log(1);
-//   React.useEffect(() => {
-//     if (!marker) {
-//       setMarker(new google.maps.Marker());
-//     }
-
-//     // remove marker from map on unmount
-//     return () => {
-//       if (marker) {
-//         marker.setMap(null);
-//       }
-//     };
-//   }, [marker]);
-
-//   React.useEffect(() => {
-//     if (marker) {
-//       marker.setOptions(options);
-//     }
-//   }, [marker, options]);
-
-//   return <div></div>;
-// };
-
 const MapElements: React.FC<MapElementsProps> = (props: MapElementsProps) => {
   const { stations } = props;
-  const center = { lat: 60.155, lng: 24.95 };
+  let center: { lat: number; lng: number } = { lat: 60.155, lng: 24.95 };
+  if (Array.isArray(stations)) {
+    if (stations[0]?.latitude && stations[0]?.longitude) {
+      center = {
+        lat: Number(stations[0]?.latitude),
+        lng: Number(stations[0]?.longitude),
+      };
+      console.log(center);
+    }
+  } else {
+    if (stations.latitude && stations.longitude) {
+      console.log(stations);
+      center = {
+        lat: Number(stations.latitude),
+        lng: Number(stations.longitude),
+      };
+    }
+  }
+  console.log(center);
   const zoom = 14;
 
   return (

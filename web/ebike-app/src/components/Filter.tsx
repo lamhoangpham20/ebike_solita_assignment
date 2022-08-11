@@ -29,25 +29,29 @@ export const Filter: React.FC<FilterProps> = ({ ...props }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Search searchMode={searchMode}></Search>
-      <LocalizationProvider
-        dateAdapter={AdapterDateFns}
-        localeText={{ start: "Start Date", end: "End Date" }}
-      >
-        <DateRangePicker
-          value={value}
-          onChange={(newValue) => {
-            setValue(newValue);
-          }}
-          renderInput={(startProps, endProps) => (
-            <React.Fragment>
-              <TextField {...startProps} />
-              <Box sx={{ mx: 2 }}> to </Box>
-              <TextField {...endProps} />
-            </React.Fragment>
-          )}
-        />
-      </LocalizationProvider>
+      <Box>
+        <Search searchMode={searchMode}></Search>
+        <Box sx={{ m: 2 }}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            localeText={{ start: "Start Date", end: "End Date" }}
+          >
+            <DateRangePicker
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              renderInput={(startProps, endProps) => (
+                <React.Fragment>
+                  <TextField {...startProps} />
+                  <Box sx={{ mx: 2 }}> to </Box>
+                  <TextField {...endProps} />
+                </React.Fragment>
+              )}
+            />
+          </LocalizationProvider>
+        </Box>
+      </Box>
     </QueryClientProvider>
   );
 };

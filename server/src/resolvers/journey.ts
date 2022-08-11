@@ -1,5 +1,5 @@
 import { Timestamp } from "typeorm";
-import { myDataSource } from "../app-data-source";
+import { myDataSource } from "../ormconfig";
 import { Journey } from "../entities/Journey";
 import { Between } from "typeorm";
 
