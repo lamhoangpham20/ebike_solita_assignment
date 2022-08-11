@@ -14,14 +14,14 @@ Then, you can create a postgresql database locally and add url to env variables 
 
 ---
 
-migrationsTableName: "migrations",
-type: "postgres",
-url:process.env.DATABASE_URL,
-entities: [Station, Journey],
-logging: true,
-//synchronize: true,
-migrations: [path.join(__dirname, "./migrations/*")],
-namingStrategy: new SnakeNamingStrategy(),
+    migrationsTableName: "migrations",
+    type: "postgres",
+    url:process.env.DATABASE_URL,
+    entities: [Station, Journey],
+    logging: true,
+    //synchronize: true,
+    migrations: [path.join(__dirname, "./migrations/*")],
+    namingStrategy: new SnakeNamingStrategy(),
 
 ---
 
