@@ -49,3 +49,5 @@ In entity, the schema for both journey and station property is defined and creat
 Base on the entity, the resolver act as a middleware to query database and get data as well as use its logic for validations and calculation. The routes call resolver for data. In this resolver, we use both typeORM method and also raw query
 
 ## API document
+
+https://app.swaggerhub.com/apis-docs/lamhoangpham20/ebike/1.0.0
