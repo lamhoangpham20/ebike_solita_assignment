@@ -8,11 +8,7 @@ import "dotenv-safe/config";
 export const myDataSource = new DataSource({
   migrationsTableName: "migrations",
   type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "01655326497",
-  database: "ebike",
+  url:process.env.DATABASE_URL,
   entities: [Station, Journey],
   logging: true,
   //synchronize: true,

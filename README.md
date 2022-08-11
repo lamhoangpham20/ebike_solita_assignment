@@ -11,10 +11,10 @@ The database is built in postgresql and store in VPC and the dataset is imported
 
 ## Journey list View
 
-The url https://web.lampham.app/journeys render a list of journeys in pagination form. The data is display in table and the pagination margin is 10 item per page
+The url https://web.lampham.app/journeys render a list of journeys in pagination form. The data is display in table and the pagination margin is 10 item per page.
 There are searching and filtering function:
-Searching field requires departure and return station name inputs and it query result base on stations
-Filter field requires departure and return station name inputs and date range to search journey base on destinations during a period of time; as the data in use is on May/2021, date range should be within 30/4/2021 - 1/6/2021
+Searching field requires departure and return station name inputs and it query result base on stations.
+Filter field requires departure and return station name inputs and date range to search journey base on destinations during a period of time; as the data in use is on May/2021, date range should be within 30/4/2021 - 1/6/2021.
 
 ## Stations List View
 
