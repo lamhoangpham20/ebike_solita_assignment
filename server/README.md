@@ -6,7 +6,8 @@ The database in use is built in postgresql with TypeORM set up to construct data
 ## How to set up
 
 > npm install
-> After cloning the folder, you can run **npm install** to install all dependency
+
+After cloning the folder, you can run **npm install** to install all dependency
 
 ---
 
@@ -31,16 +32,20 @@ To start running the app you can run this command in order to export all the ts 
 
 > npm run dev
 
-The server will run in development environment in expressJS server at desired PORT and initialize connect to database
+The server will run in development environment in expressJS server at desired PORT and initialize connect to database.
 
 ## Routing
+
 There are two routes, journey and station which provides endponts for CRUD in databases
 
 ## TypeORM
+
 ### Entity
+
 In entity, the schema for both journey and station property is defined and create schema for the request and response to follow.
 
 ### Resolver
+
 Base on the entity, the resolver act as a middleware to query database and get data as well as use its logic for validations and calculation. The routes call resolver for data. In this resolver, we use both typeORM method and also raw query
 
 ## API document
