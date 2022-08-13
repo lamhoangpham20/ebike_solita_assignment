@@ -18,11 +18,14 @@ Filter field requires departure and return station name inputs and date range to
 
 ## Stations List View
 
-The url /stations, render a list of stations in pagination form, and displayed in table form. Every column of station data is tagged with a link for detail
+The url /stations, render a list of stations in pagination form, and displayed in table form. Every column of station data is tagged with a link for detail; when you click in each individual column it will redirect the page in to single station view with the id of the station.
 
 ## Station View
 
 The url /stations/id shows details of chosen station with calculations likes: total number of journeys starting from the station and ending at station, average distance from and to the station and top 5 most popular departure and return stations. There are also a map to show station location on map
+
+## Station Search
+On the left side of the page there is a searching section for station name. User can enter the name keyword and the app will recommend suggestion of station names according to the keyword. When clicking to suggested result item, it redirect the web page to the single station view page.
 
 ## Map
 
