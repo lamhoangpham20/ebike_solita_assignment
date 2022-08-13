@@ -16,9 +16,7 @@ interface StationsProps {
   stations: Array<Station>;
 }
 
-export const StationElements: React.FC<StationsProps> = (
-  props: StationsProps
-) => {
+const StationElements: React.FC<StationsProps> = (props: StationsProps) => {
   const { stations } = props;
   return (
     <TableContainer component={Paper}>
@@ -40,7 +38,7 @@ export const StationElements: React.FC<StationsProps> = (
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell aria-label="simple row" component="th" scope="row">
                   {row.id}
                 </TableCell>
                 <TableCell align="right">{row.name}</TableCell>
@@ -56,3 +54,5 @@ export const StationElements: React.FC<StationsProps> = (
     </TableContainer>
   );
 };
+
+export default StationElements;

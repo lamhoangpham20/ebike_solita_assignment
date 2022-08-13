@@ -12,7 +12,6 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { StationElements } from "../../components/StationElements";
 import {
   TableContainer,
   Paper,
@@ -36,7 +35,7 @@ const drawerWidth = 256;
 
 function Content() {
   const router = useRouter();
-  const { id }  = router.query;
+  const { id } = router.query;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
