@@ -122,6 +122,9 @@ export default function Header(props: HeaderProps) {
           <NextLink href="/map">
           <Tab label="Station Map" />
           </NextLink>
+          <NextLink href="/create-station">
+          <Tab label="Add new Station" />
+          </NextLink>
         </Tabs>
       </AppBar>
     </React.Fragment>

@@ -43,21 +43,11 @@ export const StationElements: React.FC<StationsProps> = (
                 <TableCell component="th" scope="row">
                   {row.id}
                 </TableCell>
-                <TableCell align="right">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">
-                  {row.address}
-                </TableCell>
-                <TableCell align="right">
-                  {row.capacities}
-                </TableCell>
-                <TableCell align="right">
-                  {row.longitude}
-                </TableCell>
-                <TableCell align="right">
-                  {row.latitude}
-                </TableCell>
+                <TableCell align="right">{row.name}</TableCell>
+                <TableCell align="right">{row.address}</TableCell>
+                <TableCell align="right">{row.capacities}</TableCell>
+                <TableCell align="right">{row.longitude}</TableCell>
+                <TableCell align="right">{row.latitude}</TableCell>
               </TableRow>
             </NextLink>
           ))}

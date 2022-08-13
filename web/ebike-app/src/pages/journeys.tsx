@@ -37,7 +37,9 @@ const drawerWidth = 256;
 
 const fetchJourney = async (page = 0, mode = "show", input: Input) => {
   if (mode === "show") {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/journeys?page=${page}`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/journeys?page=${page}`
+    );
     return res.json();
   }
   if (mode === "search") {
@@ -51,9 +53,9 @@ const fetchJourney = async (page = 0, mode = "show", input: Input) => {
   if (mode === "filter") {
     if (input.depId && input.retId && input.startDate && input.endDate) {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/journeys/filter?page=${page}&depId=${
-          input.depId
-        }&retId=${
+        `${
+          process.env.NEXT_PUBLIC_API_URL
+        }/journeys/filter?page=${page}&depId=${input.depId}&retId=${
           input.retId
         }&startDate=${input.startDate.toDateString()}&endDate=${input.endDate.toDateString()}`
       );
@@ -139,10 +141,14 @@ function Content() {
             sx={{ flex: 1, py: 6, px: 4, bgcolor: "#eaeff1" }}
           >
             <Box sx={{ display: "inline-flex" }}>
+              <Box>Search</Box>
               <Search searchMode={searchMode}></Search>
             </Box>
-            <Box sx={{ display: "inline-flex" }}>
-              <Filter filterMode={filterMode}></Filter>
+            <Box>
+              <Box>Filter</Box>
+              <Box sx={{ display: "inline-flex" }}>
+                <Filter filterMode={filterMode}></Filter>
+              </Box>
             </Box>
             {isLoading && !data ? (
               <>Loading...</>
