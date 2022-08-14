@@ -142,12 +142,12 @@ function Content() {
           >
             <Box sx={{ display: "inline-flex" }}>
               <Box>Search</Box>
-              <Search searchMode={searchMode}></Search>
+              <Search searchMode={searchMode} mode="search"></Search>
             </Box>
             <Box>
               <Box>Filter</Box>
               <Box sx={{ display: "inline-flex" }}>
-                <Filter filterMode={filterMode}></Filter>
+                <Filter filterMode={filterMode} mode="filter"></Filter>
               </Box>
             </Box>
             {isLoading && !data ? (

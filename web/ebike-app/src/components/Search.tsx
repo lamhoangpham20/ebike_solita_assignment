@@ -5,6 +5,7 @@ import { Journey } from "../types/journey";
 import { Station } from "../types/station";
 
 interface SearchProps {
+  mode: string;
   searchMode: (
     depId: string,
     retId: string,
@@ -76,7 +77,7 @@ export const Search: React.FC<SearchProps> = ({ ...props }) => {
           disablePortal
           value={returnValue}
           onChange={(event: any, newValue: Journey) => setReturnValue(newValue)}
-          id="combo-box-demo"
+          id="combo-box-demo2"
           options={data ? [...data] : ([] as Array<Station>)}
           sx={{ width: 300, m: 1 }}
           getOptionLabel={(option) => (option ? option?.name : "")}
@@ -105,6 +106,7 @@ export const Search: React.FC<SearchProps> = ({ ...props }) => {
         />
         <Button
           variant="contained"
+          id={props.mode}
           onClick={() => {
             console.log(12);
           }}

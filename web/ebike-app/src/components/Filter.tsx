@@ -11,6 +11,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers-pro/AdapterDateFns";
 import { Search } from "./Search";
 
 interface FilterProps {
+  mode: string;
   filterMode: (
     depId: string,
     retId: string,
@@ -30,7 +31,7 @@ export const Filter: React.FC<FilterProps> = ({ ...props }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Box>
-        <Search searchMode={searchMode}></Search>
+        <Search mode={props.mode} searchMode={searchMode}></Search>
         <Box sx={{ m: 2 }}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
